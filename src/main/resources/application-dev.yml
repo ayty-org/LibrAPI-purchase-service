@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://tuffi.db.elephantsql.com:5432/bsrfyevt?createDatabaseIfNotExist=true&useSSL=true
+    username: bsrfyevt
+    password: dzBn1LMwWCctNoPkaef8rVAC4M0NQB1g
+    platform: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database: postgresql

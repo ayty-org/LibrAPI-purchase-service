@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: purchase-service
+  profiles:
+    active: dev
+  jpa:
+    show-sql: true
+    database: postgresql
+    hibernate:
+      ddl-auto: create
+  flyway:
+    baseline-on-migrate: false
+    enabled: false
+    locations: classpath:/db/migration
+eureka:
+  instance:
+    hostname: localhost
+    port: 8761
+  client:
+    registerWithEureka: true
+    fetchRegistry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 3000
+server:
+  port: 3333

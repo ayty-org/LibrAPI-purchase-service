@@ -20,21 +20,23 @@ public class SavePurchaseServiceImpl implements SavePurchaseService{
 
     @Override
     public void insert(PurchaseSaveDTO purchaseSaveDTO) {
+        String booksID = "";
         try{
             getUser.findBySpecificID(purchaseSaveDTO.getUser());
         } catch (FeignException.NotFound req) {
             throw new UserNotFoundException(req.getMessage());
         }
-
         try {
+
             for (String books: purchaseSaveDTO.getBooks()){
                 getBook.findBySpecificID(books);
+                booksID += books;
+                booksID += ",";
             }
         } catch (FeignException.NotFound req) {
             throw new BookNotFoundException(req.getMessage());
         }
-
-        Purchase purchase = Purchase.to(purchaseSaveDTO);
+        Purchase purchase = Purchase.to(purchaseSaveDTO, booksID);
         purchaseRepository.save(purchase);
     }
 }

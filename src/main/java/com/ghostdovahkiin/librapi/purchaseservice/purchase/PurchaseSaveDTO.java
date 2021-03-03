@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,5 +20,5 @@ public class PurchaseSaveDTO {
     private Set<String> books;
     private double amountToPay;
     private Status status;
-    private String specificID;
+    private String specificID = UUID.randomUUID().toString();
 }

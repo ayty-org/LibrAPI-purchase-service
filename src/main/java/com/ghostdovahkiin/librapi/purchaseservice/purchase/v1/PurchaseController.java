@@ -1,7 +1,5 @@
 package com.ghostdovahkiin.librapi.purchaseservice.purchase.v1;
 
-import com.ghostdovahkiin.librapi.purchaseservice.feign.GetBook;
-import com.ghostdovahkiin.librapi.purchaseservice.purchase.BookDTO;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.PurchaseReturnDTO;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.PurchaseSaveDTO;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.services.ListPurchaseService;

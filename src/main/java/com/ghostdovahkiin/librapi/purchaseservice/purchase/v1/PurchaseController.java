@@ -2,11 +2,16 @@ package com.ghostdovahkiin.librapi.purchaseservice.purchase.v1;
 
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.PurchaseReturnDTO;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.PurchaseSaveDTO;
+import com.ghostdovahkiin.librapi.purchaseservice.purchase.services.GetPurchaseService;
+import com.ghostdovahkiin.librapi.purchaseservice.purchase.services.ListPagePurchaseService;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.services.ListPurchaseService;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.services.SavePurchaseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +27,8 @@ import java.util.List;
 public class PurchaseController {
     private final SavePurchaseService savePurchaseService;
     private final ListPurchaseService listPurchaseService;
+    private final ListPagePurchaseService listPagePurchaseService;
+    private final GetPurchaseService getPurchaseService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,7 +37,16 @@ public class PurchaseController {
     }
 
     @GetMapping(value = "/all")
+    @ResponseStatus(HttpStatus.OK)
     public List<PurchaseReturnDTO> findAll(){
         return listPurchaseService.findAll();
     }
+
+    @GetMapping(value = "/")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<PurchaseReturnDTO> findPageable(Pageable pageable) { return listPagePurchaseService.findPurchase(pageable);}
+
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PurchaseReturnDTO findOne(@PathVariable("id") Long id) { return getPurchaseService.findByID(id);}
 }

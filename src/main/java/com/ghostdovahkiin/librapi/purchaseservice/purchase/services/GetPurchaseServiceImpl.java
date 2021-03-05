@@ -3,7 +3,7 @@ package com.ghostdovahkiin.librapi.purchaseservice.purchase.services;
 import com.ghostdovahkiin.librapi.purchaseservice.feign.GetBook;
 import com.ghostdovahkiin.librapi.purchaseservice.feign.GetUser;
 import com.ghostdovahkiin.librapi.purchaseservice.purchase.PurchaseReturnDTO;
-import com.ghostdovahkiin.librapi.purchaseservice.utils.PurchaseJoinRepository;
+import com.ghostdovahkiin.librapi.purchaseservice.purchase.services.utils.PurchaseJoinRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

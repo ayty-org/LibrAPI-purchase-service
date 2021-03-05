@@ -1,4 +1,4 @@
-package com.ghostdovahkiin.librapi.purchaseservice.utils;
+package com.ghostdovahkiin.librapi.purchaseservice.purchase.services.utils;
 
 import com.ghostdovahkiin.librapi.purchaseservice.feign.GetBook;
 import com.ghostdovahkiin.librapi.purchaseservice.feign.GetUser;

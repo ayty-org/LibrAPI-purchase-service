@@ -1,0 +1,321 @@
+openapi: 3.0.1
+info:
+  title: Api Documentation
+  description: Api Documentation
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: "1.0"
+servers:
+  - url: http://localhost:3333/
+tags:
+  - name: purchase-controller
+    description: Purchase Controller
+paths:
+  /v1/api/purchases:
+    post:
+      tags:
+        - purchase-controller
+      summary: save
+      operationId: saveUsingPOST
+      requestBody:
+        description: purchaseSaveDTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseSaveDTO'
+        required: true
+      responses:
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      x-codegen-request-body-name: purchaseSaveDTO
+  /v1/api/purchases/:
+    get:
+      tags:
+        - purchase-controller
+      summary: findPageable
+      operationId: findPageableUsingGET
+      parameters:
+        - name: pageNumber
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PurchaseReturnDTO'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+  /v1/api/purchases/all:
+    get:
+      tags:
+        - purchase-controller
+      summary: findAll
+      operationId: findAllUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurchaseReturnDTO'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+  /v1/api/purchases/{id}:
+    get:
+      tags:
+        - purchase-controller
+      summary: findOne
+      operationId: findOneUsingGET
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PurchaseReturnDTO'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+    put:
+      tags:
+        - purchase-controller
+      summary: update
+      operationId: updateUsingPUT
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: purchaseUpdateDTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseUpdateDTO'
+        required: true
+      responses:
+        201:
+          description: Created
+          content: {}
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      x-codegen-request-body-name: purchaseUpdateDTO
+    delete:
+      tags:
+        - purchase-controller
+      summary: delete
+      operationId: deleteUsingDELETE
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: No Content
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+components:
+  schemas:
+    BookDTO:
+      title: BookDTO
+      type: object
+      properties:
+        author:
+          type: string
+        availableQuantity:
+          type: integer
+          format: int32
+        category:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDTO'
+        id:
+          type: integer
+          format: int64
+        isbn:
+          type: string
+        publicationYear:
+          type: string
+          format: date
+        sellPrice:
+          type: number
+          format: double
+        specificID:
+          type: string
+        synopsis:
+          type: string
+        title:
+          type: string
+    CategoryDTO:
+      title: CategoryDTO
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    PurchaseReturnDTO:
+      title: PurchaseReturnDTO
+      type: object
+      properties:
+        amountToPay:
+          type: number
+          format: double
+        books:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookDTO'
+        id:
+          type: integer
+          format: int64
+        specificID:
+          type: string
+        status:
+          type: string
+          enum:
+            - CLOSED
+            - COMPLETED
+            - DELIVERED
+            - FINISHED
+            - PENDING
+        user:
+          $ref: '#/components/schemas/UserDTO'
+    PurchaseSaveDTO:
+      title: PurchaseSaveDTO
+      type: object
+      properties:
+        amountToPay:
+          type: number
+          format: double
+        books:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        id:
+          type: integer
+          format: int64
+        specificID:
+          type: string
+        status:
+          type: string
+          enum:
+            - CLOSED
+            - COMPLETED
+            - DELIVERED
+            - FINISHED
+            - PENDING
+        user:
+          type: string
+    PurchaseUpdateDTO:
+      title: PurchaseUpdateDTO
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - CLOSED
+            - COMPLETED
+            - DELIVERED
+            - FINISHED
+            - PENDING
+    UserDTO:
+      title: UserDTO
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int32
+        email:
+          type: string
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        phone:
+          type: string
+        sex:
+          type: string
+          enum:
+            - FEMALE
+            - MALE
+            - UNDEFINED
+        specificID:
+          type: string

@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyString;
 import static com.ghostdovahkiin.librapi.purchaseservice.builder.UserBuilder.createUser;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,6 +65,6 @@ public class ListPurchaseServiceTest {
                 () -> assertThat(result.get(0).getBooks().get(0).getSpecificID(), is("fe07d7bb-2cac-4c47-b9f0-19aa2df60949")),
                 () -> assertThat(result.get(0).getBooks().get(1).getSpecificID(), is("69661bd1-6092-4068-bd28-c60517f8a16s"))
         );
-
+        verify(purchaseRepository).findAllPurchase(getUser, getBook);
     }
 }
